@@ -7,12 +7,6 @@
 
 /datum/forbidden/emote
 	var/name
-	var/HPleasure	// How much pleasure who is giving the action receive
-	var/PPleasure	// How much pleasure who is receiving the action receive
-					// This is a base, can be more or less
-
-	var/HHole		// Used when who is giving the action cums
-	var/PHole		// Used when who is receiving the action cums
 
 /datum/forbidden/emote/proc/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	return
@@ -32,15 +26,7 @@
 		add_logs(P, H, text)
 
 /datum/forbidden/emote/proc/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
-	if(HPleasure)
-		H.pleasure += HPleasure * rand(0.9, 1.2)
-		if(H.pleasure >= MAX_PLEASURE)
-			H.cum(P, HHole ? HHole : "floor")
-
-	if(PPleasure)
-		P.pleasure += PPleasure * rand(0.9, 1.2)
-		if(P.pleasure >= MAX_PLEASURE)
-			P.cum(H, PHole ? PHole : "floor")
+	return
 
 /*
  *
@@ -51,11 +37,6 @@
 // Kiss
 /datum/forbidden/emote/kiss
 	name = "kiss"
-	HPleasure = 1	// How much pleasure who is giving the action receive
-	PPleasure = 1	// How much pleasure who is receiving the action receive
-
-	HHole = "floor"
-	PHole = "floor"
 
 /datum/forbidden/emote/kiss/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	return "Kiss [P.gender == FEMALE ? "her" : "his"] lips"
@@ -82,16 +63,18 @@
 	..(H, P, "kissed")
 
 /datum/forbidden/emote/kiss/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	H.pleasure += 1 * rand(0.9, 1.2)
+	if(H.pleasure >= MAX_PLEASURE)
+		H.cum(P, "floor")
+
+	P.pleasure += 1 * rand(0.9, 1.2)
+	if(P.pleasure >= MAX_PLEASURE)
+		P.cum(H, "floor")
 	..()
 
 // Lick (tajaran kiss)
 /datum/forbidden/emote/lick
 	name = "lick"
-	HPleasure = 1	// How much pleasure who is giving the action receive
-	PPleasure = 1	// How much pleasure who is receiving the action receive
-
-	HHole = "floor"
-	PHole = "floor"
 
 /datum/forbidden/emote/lick/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	return "Lick [P.gender == FEMALE ? "her" : "his"] lips"
@@ -120,16 +103,18 @@
 	..(H, P, "licked")
 
 /datum/forbidden/emote/lick/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	H.pleasure += 1 * rand(0.9, 1.2)
+	if(H.pleasure >= MAX_PLEASURE)
+		H.cum(P, "floor")
+
+	P.pleasure += 1 * rand(0.9, 1.2)
+	if(P.pleasure >= MAX_PLEASURE)
+		P.cum(H, "floor")
 	..()
 
 // French Kiss
 /datum/forbidden/emote/frenchkiss
 	name = "french-kiss"
-	HPleasure = 1	// How much pleasure who is giving the action receive
-	PPleasure = 1	// How much pleasure who is receiving the action receive
-
-	HHole = "floor"
-	PHole = "floor"
 
 /datum/forbidden/emote/frenchkiss/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	return "Give [P.gender == FEMALE ? "her" : "him"] a french kiss"
@@ -156,16 +141,19 @@
 	..(H, P, "french-kissed")
 
 /datum/forbidden/emote/frenchkiss/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	H.pleasure += 2 * rand(0.9, 1.2)
+	if(H.pleasure >= MAX_PLEASURE)
+		H.cum(P, "floor")
+
+	P.pleasure += 2 * rand(0.9, 1.2)
+	if(P.pleasure >= MAX_PLEASURE)
+		P.cum(H, "floor")
+
 	..()
 
 // Cheek Kiss
 /datum/forbidden/emote/cheekkiss
 	name = "cheek-kiss"
-	HPleasure = 1	// How much pleasure who is giving the action receive
-	PPleasure = 1	// How much pleasure who is receiving the action receive
-
-	HHole = "floor"
-	PHole = "floor"
 
 /datum/forbidden/emote/cheekkiss/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	return "Give [P.gender == FEMALE ? "her" : "him"] a cheek kiss"
@@ -190,6 +178,3 @@
 
 /datum/forbidden/emote/cheekkiss/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	..(H, P, "cheek-kissed")
-
-/datum/forbidden/emote/cheekkiss/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	..()
