@@ -179,6 +179,9 @@
 /datum/forbidden/emote/cheekkiss/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	..(H, P, "cheek-kissed")
 
+/datum/forbidden/emote/cheekkiss/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	..()
+
 // Slap that ass!
 /datum/forbidden/emote/assslap
 	name = "ass-slap"
@@ -206,4 +209,64 @@
 
 /datum/forbidden/emote/assslap/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	playsound(H.loc, 'sound/effects/snap.ogg', 50, 1)
+	..()
+
+// Slap that ass!
+/datum/forbidden/emote/assslap
+	name = "ass-slap"
+
+/datum/forbidden/emote/assslap/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	return "Slap [P.gender == FEMALE ? "her" : "him"] ass"
+
+/datum/forbidden/emote/assslap/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	if(get_dist(H, P) > 1)
+		return -1
+	if(H.incapacitated())
+		return -1
+	if(P == H)
+		return -1
+	if(!H.has_hands() || !P.species.anus)
+		return -1
+
+	return 1
+
+/datum/forbidden/emote/assslap/showText(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	H.visible_message("<span class='erp'><b>[H]</b> slaps [P]'s ass.</span>")
+
+/datum/forbidden/emote/assslap/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	..(H, P, "ass-slapped")
+
+/datum/forbidden/emote/assslap/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	playsound(H.loc, 'sound/effects/snap.ogg', 50, 1)
+	..()
+
+// Aquela sacaneada
+/datum/forbidden/emote/boobgrab
+	name = "boob-grab"
+
+/datum/forbidden/emote/boobgrab/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	if(prob(1))
+		return "Dar aquela sacaneada"
+
+	return "Grab her boobs"
+
+/datum/forbidden/emote/boobgrab/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	if(get_dist(H, P) > 1)
+		return -1
+	if(H.incapacitated())
+		return -1
+	if(P == H)
+		return -1
+	if(!H.has_hands() || !P.has_vagina())
+		return -1
+
+	return 1
+
+/datum/forbidden/emote/boobgrab/showText(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	H.visible_message("<span class='erp'><b>[H]</b> grabs [P]'s boobs.</span>")
+
+/datum/forbidden/emote/boobgrab/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	..(H, P, "boob-grabbed")
+
+/datum/forbidden/emote/boobgrab/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	..()
