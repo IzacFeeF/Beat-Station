@@ -211,35 +211,6 @@
 	playsound(H.loc, 'sound/effects/snap.ogg', 50, 1)
 	..()
 
-// Slap that ass!
-/datum/forbidden/emote/assslap
-	name = "ass-slap"
-
-/datum/forbidden/emote/assslap/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	return "Slap [P.gender == FEMALE ? "her" : "him"] ass"
-
-/datum/forbidden/emote/assslap/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) > 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(P == H)
-		return -1
-	if(!H.has_hands() || !P.species.anus)
-		return -1
-
-	return 1
-
-/datum/forbidden/emote/assslap/showText(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	H.visible_message("<span class='erp'><b>[H]</b> slaps [P]'s ass.</span>")
-
-/datum/forbidden/emote/assslap/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	..(H, P, "ass-slapped")
-
-/datum/forbidden/emote/assslap/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	playsound(H.loc, 'sound/effects/snap.ogg', 50, 1)
-	..()
-
 // Aquela sacaneada
 /datum/forbidden/emote/boobgrab
 	name = "boob-grab"
