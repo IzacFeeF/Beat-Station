@@ -509,15 +509,13 @@
 	if(!P.has_vagina() || !H.has_vagina())
 		return -1
 
-	if(P.lastreceived != H && istype(P.lraction, type))
-		return 0
 	if(!P.is_nude() || !H.is_nude())
 		return 0
 
 	return 1
 
 /datum/forbidden/action/tribbing/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
-	if(begins && (P.lastreceived != H && istype(P.lraction, type)))
+	if(begins && !istype(P.lraction, type))
 		H.visible_message("<span class='erp'><b>[H]</b> and <b>[P]</b> scissors their legs and ground their pussies together.</span>")
 	else
 		H.visible_message("<span class='erp'><b>[H]</b> rubs her pussy against [P]'s pussy.</span>")
