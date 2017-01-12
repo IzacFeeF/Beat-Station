@@ -147,6 +147,58 @@
 	..()
 
 
+// Tit suck
+/datum/forbidden/action/oral/titsuck
+	name = "tit-suck"
+	HPleasure = 2	// How much pleasure who is giving the action receive
+	PPleasure = 5	// How much pleasure who is receiving the action receive
+
+	HHole = "floor"
+	PHole = "floor"
+
+/datum/forbidden/action/oral/titsuck/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	return "Suck her tits"
+
+/datum/forbidden/action/oral/titsuck/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	if(get_dist(H, P) > 1)
+		return -1
+	if(H.incapacitated())
+		return -1
+	if(H == P)
+		return -1
+	if(!H.check_has_mouth() || !P.has_vagina())
+		return -1
+
+	if(!H.is_face_clean())
+		return 0
+	if(!breastNude(P))
+		return 0
+
+	return 1
+
+/datum/forbidden/action/oral/titsuck/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
+	if(begins)
+		H.visible_message("<span class='erp'><b>[H]</b> begins to suck [P]'s titties.</span>")
+	else
+		H.visible_message("<span class='erp'><b>[H]</b> sucks [P]'s titties.</span>")
+
+/datum/forbidden/action/oral/titsuck/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	..(H, P, "tit-sucked")
+
+/datum/forbidden/action/oral/titsuck/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
+	..()
+
+/datum/forbidden/action/oral/titsuck/proc/breastNude(mob/living/carbon/human/H)
+	if(H.wear_suit && H.wear_suit.flags_inv & HIDEJUMPSUIT)
+		return 0
+	if(H.w_uniform || H.undershirt)
+		return 0
+	if(H.underpants && H.underpants.flags & HIDEBREASTS)
+		return 0
+
+	return 1
+
+
 /*
  * FUCK ACTIONS
  */
@@ -488,7 +540,7 @@
 
 // Footjob
 /datum/forbidden/action/footjob
-	name = "handjob"
+	name = "footjob"
 	HPleasure = 1	// How much pleasure who is giving the action receive
 	PPleasure = 2	// How much pleasure who is receiving the action receive
 
