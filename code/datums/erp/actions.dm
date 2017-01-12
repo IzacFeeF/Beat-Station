@@ -518,7 +518,7 @@
 
 /datum/forbidden/action/tribbing/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(begins && (P.lastreceived != H && istype(P.lraction, type)))
-		H.visible_message("<span class='erp'><b>[H]</b> and <b>[P]</b> scissors their legs and ground their pussies together .</span>")
+		H.visible_message("<span class='erp'><b>[H]</b> and <b>[P]</b> scissors their legs and ground their pussies together.</span>")
 	else
 		H.visible_message("<span class='erp'><b>[H]</b> rubs her pussy against [P]'s pussy.</span>")
 /datum/forbidden/action/tribbing/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
