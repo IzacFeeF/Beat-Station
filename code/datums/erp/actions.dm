@@ -465,8 +465,6 @@
 
 	if(!P.is_nude())
 		return 0
-	if(isfuck(P.lfaction))
-		return 0
 	if(isvagina(P.lraction))
 		return 0
 
@@ -486,6 +484,51 @@
 
 /datum/forbidden/action/handjob/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	..()
+
+
+// Footjob
+/datum/forbidden/action/footjob
+	name = "handjob"
+	HPleasure = 1	// How much pleasure who is giving the action receive
+	PPleasure = 2	// How much pleasure who is receiving the action receive
+
+	HHole = "floor"
+	PHole = "floor"
+
+/datum/forbidden/action/footjob/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	return "Give him a footjob"
+
+/datum/forbidden/action/footjob/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	if(get_dist(H, P) > 1)
+		return -1
+	if(H.incapacitated())
+		return -1
+	if(H == P)
+		return -1
+	if(isfuck(P.lfaction))
+		return -1
+	if(!P.has_penis() || !H.has_foots())
+		return -1
+
+	if(!P.is_nude())
+		return 0
+	if(isvagina(P.lraction))
+		return 0
+
+	return 1
+
+/datum/forbidden/action/footjob/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
+	if(begins)
+		H.visible_message("<span class='erp'><b>[H]</b> begins to give <b>[P]</b> a footjob.</span>")
+	else
+		H.visible_message("<span class='erp'><b>[H]</b> gives <b>[P]</b> a footjob.</span>")
+
+/datum/forbidden/action/footjob/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	..(H, P, "footjobed")
+
+/datum/forbidden/action/footjob/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
+	..()
+
 
 // Tribbing
 /datum/forbidden/action/tribbing

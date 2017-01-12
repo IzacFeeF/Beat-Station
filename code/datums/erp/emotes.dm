@@ -72,6 +72,7 @@
 		P.cum(H, "floor")
 	..()
 
+
 // Lick (tajaran kiss)
 /datum/forbidden/emote/lick
 	name = "lick"
@@ -112,6 +113,7 @@
 		P.cum(H, "floor")
 	..()
 
+
 // French Kiss
 /datum/forbidden/emote/frenchkiss
 	name = "french-kiss"
@@ -151,6 +153,7 @@
 
 	..()
 
+
 // Cheek Kiss
 /datum/forbidden/emote/cheekkiss
 	name = "cheek-kiss"
@@ -182,6 +185,7 @@
 /datum/forbidden/emote/cheekkiss/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	..()
 
+
 // Slap that ass!
 /datum/forbidden/emote/assslap
 	name = "ass-slap"
@@ -210,6 +214,7 @@
 /datum/forbidden/emote/assslap/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	playsound(H.loc, 'sound/effects/snap.ogg', 50, 1)
 	..()
+
 
 // Aquela sacaneada
 /datum/forbidden/emote/boobgrab
