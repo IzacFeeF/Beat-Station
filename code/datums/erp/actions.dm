@@ -486,3 +486,43 @@
 
 /datum/forbidden/action/handjob/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	..()
+
+// Tribbing
+/datum/forbidden/action/tribbing
+	name = "tribbing"
+	HPleasure = 4	// How much pleasure who is giving the action receive
+	PPleasure = 4	// How much pleasure who is receiving the action receive
+
+	HHole = "floor"
+	PHole = "floor"
+
+/datum/forbidden/action/tribbing/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	return "Do scissoring"
+
+/datum/forbidden/action/tribbing/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	if(get_dist(H, P) >= 1)
+		return -1
+	if(H.incapacitated())
+		return -1
+	if(H == P)
+		return -1
+	if(!P.has_vagina() || !H.has_vagina())
+		return -1
+
+	if(P.lastreceived != H && istype(P.lraction, type))
+		return 0
+	if(!P.is_nude() || !H.is_nude())
+		return 0
+
+	return 1
+
+/datum/forbidden/action/tribbing/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
+	if(begins && (P.lastreceived != H && istype(P.lraction, type)))
+		H.visible_message("<span class='erp'><b>[H]</b> and <b>[P]</b> scissors their legs and ground their pussies together .</span>")
+	else
+		H.visible_message("<span class='erp'><b>[H]</b> rubs her pussy against [P]'s pussy.</span>")
+/datum/forbidden/action/tribbing/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	..(H, P, "tribbed")
+
+/datum/forbidden/action/tribbing/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
+	..()

@@ -269,4 +269,7 @@
 	..(H, P, "boob-grabbed")
 
 /datum/forbidden/emote/boobgrab/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	P.pleasure += 1 * rand(0.9, 1.2)
+	if(P.pleasure >= MAX_PLEASURE)
+		P.cum(H, "floor")
 	..()
