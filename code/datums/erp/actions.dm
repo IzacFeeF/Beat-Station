@@ -175,9 +175,9 @@
 	if(!P.species.anus || !H.has_penis())
 		return -1
 
-	if(!H.is_nude() || !P.is_nude())
+	if(P.lastreceived != H && istype(P.lraction, type))
 		return 0
-	if(H.lastreceived != P && isvagina(H.lraction))
+	if(!H.is_nude() || !P.is_nude())
 		return 0
 
 	return 1
