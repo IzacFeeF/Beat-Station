@@ -147,6 +147,58 @@
 	..()
 
 
+// Tit suck
+/datum/forbidden/action/oral/titsuck
+	name = "tit-suck"
+	HPleasure = 2	// How much pleasure who is giving the action receive
+	PPleasure = 5	// How much pleasure who is receiving the action receive
+
+	HHole = "floor"
+	PHole = "floor"
+
+/datum/forbidden/action/oral/titsuck/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	return "Suck her tits"
+
+/datum/forbidden/action/oral/titsuck/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	if(get_dist(H, P) > 1)
+		return -1
+	if(H.incapacitated())
+		return -1
+	if(H == P)
+		return -1
+	if(!H.check_has_mouth() || !P.has_vagina())
+		return -1
+
+	if(!H.is_face_clean())
+		return 0
+	if(!breastNude(P))
+		return 0
+
+	return 1
+
+/datum/forbidden/action/oral/titsuck/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
+	if(begins)
+		H.visible_message("<span class='erp'><b>[H]</b> begins to suck [P]'s titties.</span>")
+	else
+		H.visible_message("<span class='erp'><b>[H]</b> sucks [P]'s titties.</span>")
+
+/datum/forbidden/action/oral/titsuck/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	..(H, P, "tit-sucked")
+
+/datum/forbidden/action/oral/titsuck/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
+	..()
+
+/datum/forbidden/action/oral/titsuck/proc/breastNude(mob/living/carbon/human/H)
+	if(H.wear_suit && H.wear_suit.flags_inv & HIDEJUMPSUIT)
+		return 0
+	if(H.w_uniform || H.undershirt)
+		return 0
+	if(H.underpants && H.underpants.flags & HIDEBREASTS)
+		return 0
+
+	return 1
+
+
 /*
  * FUCK ACTIONS
  */
@@ -175,9 +227,9 @@
 	if(!P.species.anus || !H.has_penis())
 		return -1
 
-	if(!H.is_nude() || !P.is_nude())
+	if(P.lastreceived != H && istype(P.lraction, type))
 		return 0
-	if(H.lastreceived != P && isvagina(H.lraction))
+	if(!H.is_nude() || !P.is_nude())
 		return 0
 
 	return 1
@@ -465,8 +517,6 @@
 
 	if(!P.is_nude())
 		return 0
-	if(isfuck(P.lfaction))
-		return 0
 	if(isvagina(P.lraction))
 		return 0
 
@@ -485,4 +535,87 @@
 	..(H, P, "handjobed")
 
 /datum/forbidden/action/handjob/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
+	..()
+
+
+// Footjob
+/datum/forbidden/action/footjob
+	name = "footjob"
+	HPleasure = 1	// How much pleasure who is giving the action receive
+	PPleasure = 2	// How much pleasure who is receiving the action receive
+
+	HHole = "floor"
+	PHole = "floor"
+
+/datum/forbidden/action/footjob/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	return "Give him a footjob"
+
+/datum/forbidden/action/footjob/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	if(get_dist(H, P) > 1)
+		return -1
+	if(H.incapacitated())
+		return -1
+	if(H == P)
+		return -1
+	if(isfuck(P.lfaction))
+		return -1
+	if(!P.has_penis() || !H.has_foots())
+		return -1
+
+	if(!P.is_nude())
+		return 0
+	if(isvagina(P.lraction))
+		return 0
+
+	return 1
+
+/datum/forbidden/action/footjob/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
+	if(begins)
+		H.visible_message("<span class='erp'><b>[H]</b> begins to give <b>[P]</b> a footjob.</span>")
+	else
+		H.visible_message("<span class='erp'><b>[H]</b> gives <b>[P]</b> a footjob.</span>")
+
+/datum/forbidden/action/footjob/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	..(H, P, "footjobed")
+
+/datum/forbidden/action/footjob/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
+	..()
+
+
+// Tribbing
+/datum/forbidden/action/tribbing
+	name = "tribbing"
+	HPleasure = 4	// How much pleasure who is giving the action receive
+	PPleasure = 4	// How much pleasure who is receiving the action receive
+
+	HHole = "floor"
+	PHole = "floor"
+
+/datum/forbidden/action/tribbing/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	return "Do scissoring"
+
+/datum/forbidden/action/tribbing/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	if(get_dist(H, P) >= 1)
+		return -1
+	if(H.incapacitated())
+		return -1
+	if(H == P)
+		return -1
+	if(!P.has_vagina() || !H.has_vagina())
+		return -1
+
+	if(!P.is_nude() || !H.is_nude())
+		return 0
+
+	return 1
+
+/datum/forbidden/action/tribbing/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
+	if(begins && !istype(P.lraction, type))
+		H.visible_message("<span class='erp'><b>[H]</b> and <b>[P]</b> scissors their legs and ground their pussies together.</span>")
+	else
+		H.visible_message("<span class='erp'><b>[H]</b> rubs her pussy against [P]'s pussy.</span>")
+/datum/forbidden/action/tribbing/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	..(H, P, "tribbed")
+
+/datum/forbidden/action/tribbing/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	..()

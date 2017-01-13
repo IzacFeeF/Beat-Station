@@ -11,6 +11,7 @@
 #define HIDEFACE		8	//APPLIES ONLY TO HELMETS/MASKS!! Dictates whether we appear as unknown.
 
 #define SHOWUNDERWEAR	1	//APPLIES ONLY TO JUMPSUITS!!
+#define HIDEBREASTS		2	//APPLIES ONLY TO UNDERPANTS!!
 
 //slots
 #define slot_back 1

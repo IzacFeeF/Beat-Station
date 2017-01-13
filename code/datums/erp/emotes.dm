@@ -7,12 +7,6 @@
 
 /datum/forbidden/emote
 	var/name
-	var/HPleasure	// How much pleasure who is giving the action receive
-	var/PPleasure	// How much pleasure who is receiving the action receive
-					// This is a base, can be more or less
-
-	var/HHole		// Used when who is giving the action cums
-	var/PHole		// Used when who is receiving the action cums
 
 /datum/forbidden/emote/proc/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	return
@@ -32,15 +26,7 @@
 		add_logs(P, H, text)
 
 /datum/forbidden/emote/proc/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
-	if(HPleasure)
-		H.pleasure += HPleasure * rand(0.9, 1.2)
-		if(H.pleasure >= MAX_PLEASURE)
-			H.cum(P, HHole ? HHole : "floor")
-
-	if(PPleasure)
-		P.pleasure += PPleasure * rand(0.9, 1.2)
-		if(P.pleasure >= MAX_PLEASURE)
-			P.cum(H, PHole ? PHole : "floor")
+	return
 
 /*
  *
@@ -51,11 +37,6 @@
 // Kiss
 /datum/forbidden/emote/kiss
 	name = "kiss"
-	HPleasure = 1	// How much pleasure who is giving the action receive
-	PPleasure = 1	// How much pleasure who is receiving the action receive
-
-	HHole = "floor"
-	PHole = "floor"
 
 /datum/forbidden/emote/kiss/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	return "Kiss [P.gender == FEMALE ? "her" : "his"] lips"
@@ -82,16 +63,19 @@
 	..(H, P, "kissed")
 
 /datum/forbidden/emote/kiss/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	H.pleasure += 1 * rand(0.9, 1.2)
+	if(H.pleasure >= MAX_PLEASURE)
+		H.cum(P, "floor")
+
+	P.pleasure += 1 * rand(0.9, 1.2)
+	if(P.pleasure >= MAX_PLEASURE)
+		P.cum(H, "floor")
 	..()
+
 
 // Lick (tajaran kiss)
 /datum/forbidden/emote/lick
 	name = "lick"
-	HPleasure = 1	// How much pleasure who is giving the action receive
-	PPleasure = 1	// How much pleasure who is receiving the action receive
-
-	HHole = "floor"
-	PHole = "floor"
 
 /datum/forbidden/emote/lick/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	return "Lick [P.gender == FEMALE ? "her" : "his"] lips"
@@ -120,16 +104,19 @@
 	..(H, P, "licked")
 
 /datum/forbidden/emote/lick/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	H.pleasure += 1 * rand(0.9, 1.2)
+	if(H.pleasure >= MAX_PLEASURE)
+		H.cum(P, "floor")
+
+	P.pleasure += 1 * rand(0.9, 1.2)
+	if(P.pleasure >= MAX_PLEASURE)
+		P.cum(H, "floor")
 	..()
+
 
 // French Kiss
 /datum/forbidden/emote/frenchkiss
 	name = "french-kiss"
-	HPleasure = 1	// How much pleasure who is giving the action receive
-	PPleasure = 1	// How much pleasure who is receiving the action receive
-
-	HHole = "floor"
-	PHole = "floor"
 
 /datum/forbidden/emote/frenchkiss/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	return "Give [P.gender == FEMALE ? "her" : "him"] a french kiss"
@@ -156,16 +143,20 @@
 	..(H, P, "french-kissed")
 
 /datum/forbidden/emote/frenchkiss/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	H.pleasure += 2 * rand(0.9, 1.2)
+	if(H.pleasure >= MAX_PLEASURE)
+		H.cum(P, "floor")
+
+	P.pleasure += 2 * rand(0.9, 1.2)
+	if(P.pleasure >= MAX_PLEASURE)
+		P.cum(H, "floor")
+
 	..()
+
 
 // Cheek Kiss
 /datum/forbidden/emote/cheekkiss
 	name = "cheek-kiss"
-	HPleasure = 1	// How much pleasure who is giving the action receive
-	PPleasure = 1	// How much pleasure who is receiving the action receive
-
-	HHole = "floor"
-	PHole = "floor"
 
 /datum/forbidden/emote/cheekkiss/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	return "Give [P.gender == FEMALE ? "her" : "him"] a cheek kiss"
@@ -192,4 +183,69 @@
 	..(H, P, "cheek-kissed")
 
 /datum/forbidden/emote/cheekkiss/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	..()
+
+
+// Slap that ass!
+/datum/forbidden/emote/assslap
+	name = "ass-slap"
+
+/datum/forbidden/emote/assslap/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	return "Slap [P.gender == FEMALE ? "her" : "him"] ass"
+
+/datum/forbidden/emote/assslap/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	if(get_dist(H, P) > 1)
+		return -1
+	if(H.incapacitated())
+		return -1
+	if(P == H)
+		return -1
+	if(!H.has_hands() || !P.species.anus)
+		return -1
+
+	return 1
+
+/datum/forbidden/emote/assslap/showText(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	H.visible_message("<span class='erp'><b>[H]</b> slaps [P]'s ass.</span>")
+
+/datum/forbidden/emote/assslap/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	..(H, P, "ass-slapped")
+
+/datum/forbidden/emote/assslap/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	playsound(H.loc, 'sound/effects/snap.ogg', 50, 1)
+	..()
+
+
+// Aquela sacaneada
+/datum/forbidden/emote/boobgrab
+	name = "boob-grab"
+
+/datum/forbidden/emote/boobgrab/actionButton(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	if(prob(1))
+		return "Dar aquela sacaneada"
+
+	return "Grab her boobs"
+
+/datum/forbidden/emote/boobgrab/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	if(get_dist(H, P) > 1)
+		return -1
+	if(H.incapacitated())
+		return -1
+	if(P == H)
+		return -1
+	if(!H.has_hands() || !P.has_vagina())
+		return -1
+
+	return 1
+
+/datum/forbidden/emote/boobgrab/showText(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	H.visible_message("<span class='erp'><b>[H]</b> grabs [P]'s boobs.</span>")
+
+/datum/forbidden/emote/boobgrab/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	..(H, P, "boob-grabbed")
+
+/datum/forbidden/emote/boobgrab/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	P.pleasure += 1 * rand(0.9, 1.2)
+	if(P.pleasure >= MAX_PLEASURE)
+		P.cum(H, "floor")
 	..()
