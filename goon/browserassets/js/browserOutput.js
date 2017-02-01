@@ -36,6 +36,7 @@ var opts = {
 	//Options menu
 	'subOptionsLoop': null, //Contains the interval loop for closing the options menu
 	'suppressOptionsClose': false, //Whether or not we should be hiding the suboptions menu
+	'enableTwitchify': true, // I am so sorry
 	'highlightTerms': [],
 	'highlightLimit': 5,
 	'highlightColor': '#FFFF00', //The color of the highlighted message
@@ -95,6 +96,43 @@ function linkify(text) {
 			return $1 ? $0: '<a href="http://'+$0+'">'+$0+'</a>';
 		}
 	});
+}
+
+// Twitchify stuff
+var twitchifyEmotes = {};
+var twitchifyCategories = {
+	'global': '<img src="//static-cdn.jtvnw.net/emoticons/v1/:key/1.0" alt=":name" title=":name">',
+	'betterttv': '<img src="//cdn.betterttv.net/emote/:key/1x" alt=":name" title=":name">'
+};
+
+function loadEmotes()
+{
+	if (typeof TWITCH_EMOTES !== 'undefined')
+	{
+		twitchifyEmotes = TWITCH_EMOTES;
+	}
+}
+
+function twitchify(text)
+{
+	for (var cat in twitchifyCategories)
+	{
+		if (!(cat in twitchifyEmotes))
+			continue;
+
+		for (var key in twitchifyEmotes[cat])
+		{
+			var escaped_key = key.replace(/[.?+*^${}()|[\]\\]/g, '\\$');
+			var re = new RegExp('\\b' + escaped_key + '\\b', 'g');
+
+			if (text.indexOf(key) === -1)
+				continue;
+
+			text = text.replace(re, '<div class="emote emote-' + key + '"></div>');
+		}
+	}
+
+	return text;
 }
 
 //Actually turns the highlight term match into appropriate html
@@ -235,6 +273,10 @@ function output(message, flag) {
 	//Url stuff
 	if (message.length && flag != 'preventLink') {
 		message = linkify(message);
+	}
+
+	if (opts.enableTwitchify && flag == 'allowEmotes') {
+		message = twitchify(message);
 	}
 
 	opts.messageCount++;
@@ -473,6 +515,8 @@ $(function() {
 	$messages = $('#messages');
 	$subOptions = $('#subOptions');
 
+	loadEmotes();
+
 	//Hey look it's a controller loop!
 	setInterval(function() {
 		if (opts.lastPang + opts.pangLimit < Date.now() && !opts.restarting) { //Every pingLimit
@@ -620,7 +664,7 @@ $(function() {
 		}
 
 		e.preventDefault()
-		
+
 		var k = e.which;
 		var command; // Command to execute through winset.
 
