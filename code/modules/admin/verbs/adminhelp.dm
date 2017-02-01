@@ -124,7 +124,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 	send_to_admin_discord("[selected_type] from **[key_name(src)]**: *[original_msg]*")
 
 	//show it to the person adminhelping too
-	to_chat(src, "<span class='boldnotice'>[selected_type]</b>: [original_msg]</span>", "allowEmotes")
+	to_chat(src, "<span class='boldnotice'>[selected_type]</b>: [original_msg]</span>")
 
 	var/admin_number_present = adminholders.len - admin_number_afk
 	log_admin("[selected_type]: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
