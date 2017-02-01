@@ -17,7 +17,7 @@ var/global/datum/global_init/init = new ()
 	view = "15x15"
 	cache_lifespan = 0	//stops player uploaded stuff from being kept in the rsc past the current session
 
-var/simple_var = 1
+var/simple_var
 
 #define RECOMMENDED_VERSION 510
 

@@ -8,8 +8,7 @@ var/list/chatResources = list(
 	"goon/browserassets/css/fonts/fontawesome-webfont.woff",
 	"goon/browserassets/css/font-awesome.css",
 	"goon/browserassets/css/browserOutput.css",
-	"goon/browserassets/css/twitchify.css",
-	"goon/browserassets/json/emotes.all.json"
+	"goon/browserassets/json/emotedata_all.json"
 )
 
 /var/savefile/iconCache = new /savefile("data/iconCache.sav")

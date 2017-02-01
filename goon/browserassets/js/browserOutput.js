@@ -101,16 +101,13 @@ function linkify(text) {
 // Twitchify stuff
 var twitchifyEmotes = {};
 var twitchifyCategories = {
-	'global': '<img src="//static-cdn.jtvnw.net/emoticons/v1/:key/1.0" alt=":name" title=":name">',
-	'betterttv': '<img src="//cdn.betterttv.net/emote/:key/1x" alt=":name" title=":name">'
+	'bttv': { 'before' : 'http://cdn.betterttv.net/emote/', 'after' : '/1x'},
+	'twitch': { 'before' : 'https://static-cdn.jtvnw.net/emoticons/v1/', 'after' : '/1.0'},
+	'global': { 'before' : 'https://static-cdn.jtvnw.net/emoticons/v1/', 'after' : '/1.0'}
 };
 
-function loadEmotes()
-{
-	if (typeof TWITCH_EMOTES !== 'undefined')
-	{
-		twitchifyEmotes = TWITCH_EMOTES;
-	}
+function loadEmotes() {
+	twitchifyEmotes = {'bttv' : BTTV_EMOTES, 'twitch' : TWITCH_EMOTES, 'global' : GLOBAL_EMOTES};
 }
 
 function twitchify(text)
@@ -122,13 +119,21 @@ function twitchify(text)
 
 		for (var key in twitchifyEmotes[cat])
 		{
-			var escaped_key = key.replace(/[.?+*^${}()|[\]\\]/g, '\\$');
+			var escaped_key = key.replace(/[.?+*^${}()|[\]\\]/g, '\\$&');
 			var re = new RegExp('\\b' + escaped_key + '\\b', 'g');
 
 			if (text.indexOf(key) === -1)
 				continue;
+			
+			var url = 'nothing';
+			
+			if (cat == 'global') {
+				url = twitchifyCategories[cat]['before'] + twitchifyEmotes[cat][key]['image_id'] + twitchifyCategories[cat]['after'];
+			} else {
+				url = twitchifyCategories[cat]['before'] + twitchifyEmotes[cat][key] + twitchifyCategories[cat]['after'];
+			}
 
-			text = text.replace(re, '<div class="emote emote-' + key + '"></div>');
+			text = text.replace(re, '<img class="emote" src="'+url+'" alt="'+key+'" title="'+key+'">');
 		}
 	}
 
@@ -275,8 +280,9 @@ function output(message, flag) {
 		message = linkify(message);
 	}
 
-	if (opts.enableTwitchify && flag == 'allowEmotes') {
-		message = twitchify(message);
+	if (opts.enableTwitchify) {
+		if(message.match(/<(?: *)span class(?: *)=(?: *)('|")emote_enabled('|")(?: *)>(.*)<(?: *)\/span(?: *)>/g))
+			message = twitchify(message);
 	}
 
 	opts.messageCount++;
@@ -514,7 +520,7 @@ if (typeof $ === 'undefined') {
 $(function() {
 	$messages = $('#messages');
 	$subOptions = $('#subOptions');
-
+	
 	loadEmotes();
 
 	//Hey look it's a controller loop!
