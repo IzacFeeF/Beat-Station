@@ -54,7 +54,7 @@
 	var/hostedby = null
 	var/respawn = 0
 	var/civilian_allowed = 0
-	var/job_limit = 1
+	var/job_limit = 0
 	var/guest_jobban = 1
 	var/usewhitelist = 0
 	var/mods_are_mentors = 0
@@ -555,6 +555,9 @@
 
 				if("simple_password")
 					config.simple_password = value
+
+				if("job_limit")
+					config.job_limit = value
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"
