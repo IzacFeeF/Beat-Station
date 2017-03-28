@@ -427,11 +427,17 @@
 	if(sql_id)
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
 		var/DBQuery/query_update = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
-		query_update.Execute()
+		if(!query_update.Execute())
+			var/err = query_update.ErrorMsg()
+			log_game("SQL ERROR during log_client_to_db (update). Error : \[[err]\]\n")
+			message_admins("SQL ERROR during log_client_to_db (update). Error : \[[err]\]\n")
 	else
 		//New player!! Need to insert all the stuff
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
-		query_insert.Execute()
+		if(!query_insert.Execute())
+			var/err = query_insert.ErrorMsg()
+			log_game("SQL ERROR during log_client_to_db (insert). Error : \[[err]\]\n")
+			message_admins("SQL ERROR during log_client_to_db (insert). Error : \[[err]\]\n")
 
 	//Logging player access
 	var/serverip = "[world.internet_address]:[world.port]"
