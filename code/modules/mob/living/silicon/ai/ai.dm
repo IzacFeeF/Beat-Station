@@ -41,6 +41,8 @@ var/list/ai_verbs_default = list(
 	anchored = 1 // -- TLE
 	density = 1
 	status_flags = CANSTUN|CANPARALYSE|CANPUSH
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
+	see_in_dark = 8
 	can_strip = 0
 	var/list/network = list("SS13","Telecomms","Research Outpost","Mining Outpost")
 	var/obj/machinery/camera/current = null
@@ -614,14 +616,17 @@ var/list/ai_verbs_default = list(
 		updatehealth()
 
 /mob/living/silicon/ai/reset_perspective(atom/A)
-	if(current)
-		current.set_light(0)
-	if(istype(A,/obj/machinery/camera))
+	if(camera_light_on)
+		light_cameras()
+	if(istype(A, /obj/machinery/camera))
 		current = A
-	..()
-	if(istype(A,/obj/machinery/camera))
-		if(camera_light_on)	A.set_light(AI_CAMERA_LUMINOSITY)
-		else				A.set_light(0)
+
+	. = ..()
+	if(.)
+		if(!A && isturf(loc) && eyeobj)
+			client.eye = eyeobj
+			client.perspective = MOB_PERSPECTIVE
+			eyeobj.get_remote_view_fullscreens(src)
 
 /mob/living/silicon/ai/proc/botcall()
 	set category = "AI Commands"
@@ -1084,11 +1089,3 @@ var/list/ai_verbs_default = list(
 		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 		to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 		apc.update_icon()
-
-/mob/living/silicon/ai/reset_perspective(atom/A)
-
-	if(camera_light_on)
-		light_cameras()
-	if(istype(A, /obj/machinery/camera))
-		current = A
-	. = ..()

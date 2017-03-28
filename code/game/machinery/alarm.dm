@@ -761,7 +761,7 @@
 /obj/machinery/alarm/proc/get_nano_data_console(mob/user)
 	var/data[0]
 	data["name"] = sanitize(name)
-	data["ref"] = "\ref[src]"
+	data["ref"] = UID()
 	data["danger"] = max(danger_level, alarm_area.atmosalm)
 	var/area/Area = get_area(src)
 	data["area"] = sanitize(Area.name)

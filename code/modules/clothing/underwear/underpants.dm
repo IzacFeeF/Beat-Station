@@ -76,6 +76,7 @@
 	standing_icon = "male_kinky"
 	use_gender = MALE
 	item_state = "bgloves"
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/male_mankini
 	name = "Mankini"
@@ -91,6 +92,7 @@
 	use_gender = FEMALE
 	item_state = "r_shoes"
 	adjustable = 1
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_green
 	name = "Ladies Green"
@@ -98,6 +100,7 @@
 	use_gender = FEMALE
 	item_state = "bgloves"
 	adjustable = 1
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_white
 	name = "Ladies White"
@@ -105,6 +108,7 @@
 	use_gender = FEMALE
 	item_state = "lgloves"
 	adjustable = 1
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_whiter
 	name = "Ladies Whiter"
@@ -112,18 +116,21 @@
 	use_gender = FEMALE
 	item_state = "lgloves"
 	adjustable = 1
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_whitealt
 	name = "Ladies White Alt"
 	standing_icon = "female_whitealt"
 	use_gender = FEMALE
 	item_state = "lgloves"
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_yellow
 	name = "Ladies Yellow"
 	standing_icon = "female_yellow"
 	use_gender = FEMALE
 	item_state = "o_shoes"
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_blue
 	name = "Ladies Blue"
@@ -131,12 +138,14 @@
 	use_gender = FEMALE
 	item_state = "bgloves"
 	adjustable = 1
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_babyblue
 	name = "Ladies Baby Blue"
 	standing_icon = "female_babyblue"
 	use_gender = FEMALE
 	item_state = "bgloves"
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_black
 	name = "Ladies Black"
@@ -144,18 +153,21 @@
 	use_gender = FEMALE
 	item_state = "bgloves"
 	adjustable = 1
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_blacker
 	name = "Ladies Blacker"
 	standing_icon = "female_blacker"
 	use_gender = FEMALE
 	adjustable = 1
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_blackalt
 	name = "Ladies Black Alt"
 	standing_icon = "female_blackalt"
 	use_gender = FEMALE
 	item_state = "bgloves"
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_kinky
 	name = "Ladies Kinky"
@@ -163,6 +175,7 @@
 	use_gender = FEMALE
 	item_state = "r_shoes"
 	adjustable = 1
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_babydoll
 	name = "Ladies Full Grey"
@@ -170,12 +183,14 @@
 	use_gender = FEMALE
 	item_state = "bgloves"
 	adjustable = 1
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_pink
 	name = "Ladies Pink"
 	standing_icon = "female_pink"
 	use_gender = FEMALE
 	item_state = "r_shoes"
+	flags = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_thong
 	name = "Ladies Thong"
@@ -183,3 +198,4 @@
 	use_gender = FEMALE
 	item_state = "r_shoes"
 	adjustable = 1
+	flags = HIDEBREASTS

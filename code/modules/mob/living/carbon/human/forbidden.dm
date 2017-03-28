@@ -223,6 +223,14 @@
 		hashands = (temp && temp.is_usable())
 	return hashands
 
+/mob/living/carbon/human/proc/has_foots()
+	var/obj/item/organ/external/temp = organs_by_name["r_foot"]
+	var/hashands = (temp && temp.is_usable())
+	if (!hashands)
+		temp = organs_by_name["l_foot"]
+		hashands = (temp && temp.is_usable())
+	return hashands
+
 /*
  * ACTION HELPERS
  */
