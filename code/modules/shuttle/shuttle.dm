@@ -427,11 +427,14 @@
 							shake_camera(M, 2, 1) // turn it down a bit come on
 						else
 							shake_camera(M, 7, 1)
-				if(istype(M, /mob/living/carbon))
-					if(!M.buckled)
-						M.Weaken(3)
-
-
+				
+				
+				if(istype(M, /mob/living/carbon))	//pra evitar que outras criaturas(monstros da xenobio, pets, etc.) levem o stun também.	
+					if(M.buckled)
+						M.Weaken(3) //stunna o player caso não esteja com buckle em alguma coisa
+					
+					
+					
 		if (rotation)
 			T1.shuttleRotate(rotation)
 
