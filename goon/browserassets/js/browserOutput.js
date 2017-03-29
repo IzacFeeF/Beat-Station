@@ -36,6 +36,7 @@ var opts = {
 	//Options menu
 	'subOptionsLoop': null, //Contains the interval loop for closing the options menu
 	'suppressOptionsClose': false, //Whether or not we should be hiding the suboptions menu
+	'enableTwitchify': true, // I am so sorry
 	'highlightTerms': [],
 	'highlightLimit': 5,
 	'highlightColor': '#FFFF00', //The color of the highlighted message
@@ -95,6 +96,48 @@ function linkify(text) {
 			return $1 ? $0: '<a href="http://'+$0+'">'+$0+'</a>';
 		}
 	});
+}
+
+// Twitchify stuff
+var twitchifyEmotes = {};
+var twitchifyCategories = {
+	'bttv': { 'before' : 'http://cdn.betterttv.net/emote/', 'after' : '/1x'},
+	'twitch': { 'before' : 'https://static-cdn.jtvnw.net/emoticons/v1/', 'after' : '/1.0'},
+	'global': { 'before' : 'https://static-cdn.jtvnw.net/emoticons/v1/', 'after' : '/1.0'}
+};
+
+function loadEmotes() {
+	twitchifyEmotes = {'bttv' : BTTV_EMOTES, 'twitch' : TWITCH_EMOTES, 'global' : GLOBAL_EMOTES};
+}
+
+function twitchify(text)
+{
+	for (var cat in twitchifyCategories)
+	{
+		if (!(cat in twitchifyEmotes))
+			continue;
+
+		for (var key in twitchifyEmotes[cat])
+		{
+			var escaped_key = key.replace(/[.?+*^${}()|[\]\\]/g, '\\$&');
+			var re = new RegExp('\\b' + escaped_key + '\\b', 'g');
+
+			if (text.indexOf(key) === -1)
+				continue;
+			
+			var url = 'nothing';
+			
+			if (cat == 'global') {
+				url = twitchifyCategories[cat]['before'] + twitchifyEmotes[cat][key]['image_id'] + twitchifyCategories[cat]['after'];
+			} else {
+				url = twitchifyCategories[cat]['before'] + twitchifyEmotes[cat][key] + twitchifyCategories[cat]['after'];
+			}
+
+			text = text.replace(re, '<img class="emote" src="'+url+'" alt="'+key+'" title="'+key+'">');
+		}
+	}
+
+	return text;
 }
 
 //Actually turns the highlight term match into appropriate html
@@ -235,6 +278,11 @@ function output(message, flag) {
 	//Url stuff
 	if (message.length && flag != 'preventLink') {
 		message = linkify(message);
+	}
+
+	if (opts.enableTwitchify) {
+		if(message.match(/<(?: *)span class(?: *)=(?: *)('|")emote_enabled('|")(?: *)>(.*)<(?: *)\/span(?: *)>/g))
+			message = twitchify(message);
 	}
 
 	opts.messageCount++;
@@ -472,6 +520,8 @@ if (typeof $ === 'undefined') {
 $(function() {
 	$messages = $('#messages');
 	$subOptions = $('#subOptions');
+	
+	loadEmotes();
 
 	//Hey look it's a controller loop!
 	setInterval(function() {
@@ -620,7 +670,7 @@ $(function() {
 		}
 
 		e.preventDefault()
-		
+
 		var k = e.which;
 		var command; // Command to execute through winset.
 

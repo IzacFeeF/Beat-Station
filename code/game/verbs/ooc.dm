@@ -40,6 +40,8 @@ var/global/admin_ooc_colour = "#b82e00"
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
+	msg = "<span class='emote_enabled'>[msg]</span>"
+
 	log_ooc("[mob.name]/[key] : [msg]")
 
 	var/display_colour = normal_ooc_colour
