@@ -431,7 +431,7 @@
 				
 				if(istype(M, /mob/living/carbon))	//pra evitar que outras criaturas(monstros da xenobio, pets, etc.) levem o stun também.	
 					if(M.buckled)
-					M.Weaken(3) //stunna o player caso não esteja com buckle em alguma coisa
+						M.Weaken(3) //stunna o player caso não esteja com buckle em alguma coisa
 					
 					
 					
