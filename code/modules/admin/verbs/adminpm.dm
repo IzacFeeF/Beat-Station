@@ -149,8 +149,6 @@
 						adminhelp(reply)													//sender has left, adminhelp instead
 				return
 
-	msg = "<span class='emote_enabled'>[msg]</span>"
-
 	recieve_message = "<span class='[recieve_span]'>[type] from-<b>[recieve_pm_type][key_name(src, C, C.holder ? 1 : 0, type)]</b>: [msg]</span>"
 	to_chat(C, recieve_message)
 	to_chat(src, "<font color='blue'>[send_pm_type][type] to-<b>[key_name(C, src, holder ? 1 : 0, type)]</b>: [msg]</font>")

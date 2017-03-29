@@ -7,8 +7,7 @@ var/list/chatResources = list(
 	"goon/browserassets/css/fonts/fontawesome-webfont.ttf",
 	"goon/browserassets/css/fonts/fontawesome-webfont.woff",
 	"goon/browserassets/css/font-awesome.css",
-	"goon/browserassets/css/browserOutput.css",
-	"goon/browserassets/json/emotedata_all.json"
+	"goon/browserassets/css/browserOutput.css"
 )
 
 /var/savefile/iconCache = new /savefile("data/iconCache.sav")
@@ -208,8 +207,8 @@ var/list/chatResources = list(
 var/to_chat_filename
 var/to_chat_line
 var/to_chat_src
-// Call using macro: to_chat(target, message, flag)
-/proc/__to_chat(target, message, flag)
+// Call using macro: to_chat(target, message)
+/proc/__to_chat(target, message)
 	if(!is_valid_tochat_message(message) || !is_valid_tochat_target(target))
 		target << message
 		// Info about the "message"
@@ -259,8 +258,5 @@ var/to_chat_src
 				C.chatOutput.messageQueue.Add(message)
 				return
 
-		var/output_message = "[url_encode(message)]"
-		if(flag)
-			output_message += "&[url_encode(flag)]"
 
-		target << output(output_message, "browseroutput:output")
+		target << output(url_encode(message), "browseroutput:output")
